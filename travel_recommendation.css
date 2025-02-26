@@ -1,60 +1,69 @@
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Arial', Helvetica, sans-serif;
+    background-color: #f9f9f9;
     line-height: 1.6;
 }
 
 .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #1a1a1a;
     padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    color: #ffffff;
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
 .logo span {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
-    color: #fff;
 }
 
 .nav-links ul {
     list-style-type: none;
     display: flex;
-    gap: 30px;
+    gap: 40px;
     padding: 0;
     margin: 0;
 }
 
 .nav-links a {
-    color: #fff;
+    color: #ffffff;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
 }
 
 .nav-links a:hover {
     text-decoration: underline;
+    color: #00d1b2;
 }
 
 .back-arrow {
-    font-size: 1.5rem;
-    color: #fff;
+    color: #ffffff;
+    font-size: 1.2rem;
     text-decoration: none;
     padding: 10px;
+    background-color: #006d66;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-arrow:hover {
+    background-color: #004d40;
+    color: #fff;
 }
 
 .search-container {
     display: flex;
     align-items: center;
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 25px;
     padding: 5px 10px;
-    border: 1px solid #006d66;
+    border: 2px solid #006d66;
 }
 
 .search-input {
@@ -63,7 +72,7 @@ body {
     color: #006d66;
     padding: 10px 15px;
     font-size: 1rem;
-    width: 300px;
+    width: 250px;
 }
 
 .search-input::placeholder {
@@ -72,42 +81,47 @@ body {
 
 .search-btn, .clear-btn {
     border: none;
-    padding: 10px 15px;
+    padding: 10px 20px;
     font-size: 1rem;
     cursor: pointer;
     background-color: #006d66;
     color: white;
     border-radius: 20px;
     margin-left: 5px;
+    transition: background-color 0.3s;
 }
 
 .search-btn:hover, .clear-btn:hover {
     background-color: #004d40;
 }
 
-.hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+.intro-section {
+    background-image: url('https://plus.unsplash.com/premium_photo-1682320427001-e7a016510197?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGFlcmlhbCUyMGNpdHl8ZW58MHx8MHx8fDA%3D');
     background-size: cover;
     background-position: center;
-    height: 80vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: #fff;
+    text-align: left;
+    color: #000;
+    padding-left: 200px;
+    position: relative;
 }
 
-.hero-section h1 {
-    font-size: 4rem;
-    margin: 0;
+.intro-section h1 {
+    font-size: 3.5rem;
     font-weight: bold;
+    margin: 0;
 }
 
-.hero-section p {
-    font-size: 1.5rem;
-    max-width: 600px;
+.intro-description {
+    font-size: 1.2rem;
+    max-width: 500px;
     margin-top: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .social-icons {
@@ -117,108 +131,119 @@ body {
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
 .social-icons img {
     width: 40px;
     height: auto;
-}
-
-.social-icons a:hover {
-    transform: scale(1.2);
     transition: transform 0.3s ease;
 }
 
+.social-icons a:hover img {
+    transform: scale(1.2);
+}
+
 .featured-destinations, .search-results {
-    padding: 50px 20px;
+    padding: 60px 20px;
+    background-color: #fff;
     text-align: center;
 }
 
 .featured-destinations h2, .search-results h2 {
     font-size: 2.5rem;
     color: #2c3e50;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .destination-grid, .results-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .destination-card {
-    background: #fff;
-    border-radius: 10px;
+    background: #ffffff;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .destination-card:hover {
     transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .destination-card img {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
 }
 
 .destination-card h3 {
     margin: 15px 0;
     color: #2c3e50;
+    font-size: 1.5rem;
 }
 
 .destination-card p {
     padding: 0 15px 15px;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    color: #555;
 }
 
 .destination-card a {
     color: #006d66;
     text-decoration: none;
+    font-weight: bold;
+}
+
+.destination-card a:hover {
+    text-decoration: underline;
 }
 
 .destination-details h4 {
-    margin: 10px 15px;
+    margin: 15px 15px 5px;
     color: #006d66;
+    font-size: 1.2rem;
 }
 
 .about-page {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+    background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=3000&q=80');
     background-size: cover;
     background-position: center;
     min-height: 100vh;
+    color: #fff;
 }
 
 .about-page .container {
-    padding: 50px 20px;
+    padding: 60px 20px;
     text-align: center;
-    color: #fff;
+    background: rgba(0, 0, 0, 0.6);
+    margin: 0 auto;
+    max-width: 1200px;
 }
 
 .about-page h1 {
     font-size: 3rem;
+    margin-bottom: 20px;
 }
 
 .team-members {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px;
 }
 
 .member {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 30%;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
@@ -227,11 +252,20 @@ body {
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.member h3 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+}
+
+.member p {
+    color: #555;
 }
 
 .contact-page {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+    background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=3000&q=80');
     background-size: cover;
     background-position: center;
     min-height: 100vh;
@@ -241,51 +275,61 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 50px;
+    padding: 60px;
     max-width: 1000px;
     margin: 100px auto 0;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .contact-info {
     flex: 1;
-    padding-right: 50px;
+    padding-right: 40px;
 }
 
 .contact-info h2 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #2c3e50;
+}
+
+.contact-info p {
+    font-size: 1.2rem;
+    color: #555;
 }
 
 .contact-form {
     flex: 1;
     padding: 30px;
-    background: #f4f4f4;
+    background: #f9f9f9;
     border-radius: 8px;
 }
 
 .contact-form label {
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 15px;
+    color: #2c3e50;
 }
 
 .contact-form input, .contact-form textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 1rem;
 }
 
 .contact-form button {
-    margin-top: 15px;
-    padding: 10px;
+    margin-top: 20px;
+    padding: 12px 25px;
     background-color: #006d66;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
 }
 
 .contact-form button:hover {
@@ -296,17 +340,19 @@ body {
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
     }
-    .hero-section h1 {
+    .intro-section {
+        padding-left: 20px;
+    }
+    .intro-section h1 {
         font-size: 2.5rem;
     }
     .contact-container {
         flex-direction: column;
-        padding: 20px;
+        padding: 30px;
     }
-    .member {
+    .search-input {
         width: 100%;
     }
 }
-  
