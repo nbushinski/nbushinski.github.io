@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const clearButton = document.querySelector(".clear-btn");
     const resultsContainer = document.querySelector(".results-container");
     const featuredGrid = document.getElementById("featured-grid");
+const searchContainer = document.querySelector(".search-container");
+let dropdown = null;
 
     fetch("./travel_recommendation_api.json")
         .then(response => {
@@ -20,35 +22,54 @@ document.addEventListener("DOMContentLoaded", () => {
             clearButton.addEventListener("click", () => {
                 searchInput.value = "";
                 resultsContainer.innerHTML = "";
+                hideDropdown();
             });
+            searchInput.addEventListener("input", () => {
+                const query = searchInput.value.trim().toLowerCase();
+                if (query) {
+                    showAutocompleteDropdown(data, query);
+                } else {
+                    hideDropdown();
+                }
+            });
+        })
         })
         .catch(error => {
             console.error("Error fetching data:", error);
             resultsContainer.innerHTML = "<p>Error loading data. Please try again later.</p>";
         });
 
-    function searchDestinations(data) {
-        const query = searchInput.value.trim().toLowerCase();
-        resultsContainer.innerHTML = "";
+ function searchDestinations(data) {
+    const query = searchInput.value.trim().toLowerCase();
+    resultsContainer.innerHTML = "";
+    hideDropdown();
 
-        if (!query) {
-            resultsContainer.innerHTML = "<p>Please enter a search term.</p>";
-            return;
-        }
+    if (!query) {
+        resultsContainer.innerHTML = "<p>Please enter a search term.</p>";
+        return;
+    }
 
-        const results = data.destinations.filter(dest => 
+    let results = [];
+
+    // Handle "beach" or "beaches" keyword
+    if (query.includes("beach") || query.includes("beaches")) {
+        results = data.destinations.filter(dest => dest.type === "beach");
+    } else {
+        // Regular search across all fields
+        results = data.destinations.filter(dest => 
             dest.name.toLowerCase().includes(query) ||
             dest.topDestinations.some(d => d.name.toLowerCase().includes(query)) ||
             dest.thingsToDo.some(t => t.name.toLowerCase().includes(query)) ||
             dest.hotels.some(h => h.name.toLowerCase().includes(query))
         );
-
-        if (results.length > 0) {
-            results.forEach(displayDestination);
-        } else {
-            resultsContainer.innerHTML = "<p>No results found. Try another search.</p>";
-        }
     }
+
+    if (results.length > 0) {
+        results.forEach(displayDestination);
+    } else {
+        resultsContainer.innerHTML = "<p>No results found. Try another search.</p>";
+    }
+}
 
     function displayFeaturedDestinations(destinations) {
         destinations.forEach(dest => {
@@ -88,4 +109,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return card;
     }
+function showAutocompleteDropdown(data, query) {
+    if (dropdown) dropdown.remove();
+
+    dropdown = document.createElement("div");
+    dropdown.classList.add("autocomplete-dropdown");
+    searchContainer.appendChild(dropdown);
+
+    const suggestions = data.destinations.filter(dest => 
+        dest.name.toLowerCase().includes(query)
+    ).slice(0, 5); // Limit to 5 suggestions
+
+    if (suggestions.length > 0) {
+        suggestions.forEach(dest => {
+            const item = document.createElement("div");
+            item.classList.add("autocomplete-item");
+            item.textContent = dest.name;
+            item.addEventListener("click", () => {
+                searchInput.value = dest.name;
+                searchDestinations(data);
+            });
+            dropdown.appendChild(item);
+        });
+        dropdown.style.display = "block";
+    } else {
+        hideDropdown();
+    }
+}
+
+function hideDropdown() {
+    if (dropdown) {
+        dropdown.remove();
+        dropdown = null;
+    }
+}
 });
