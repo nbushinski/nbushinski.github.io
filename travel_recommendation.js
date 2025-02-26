@@ -1,34 +1,23 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.querySelector(".search-input"); // Adjusted selector
-    const searchButton = document.querySelector(".search-btn"); // Adjusted selector
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.querySelector(".search-input");
+    const searchButton = document.querySelector(".search-btn");
     const clearButton = document.querySelector(".clear-btn");
-    const resultsContainer = document.getElementById("results");
+    const resultsContainer = document.querySelector(".results-container");
+    const featuredGrid = document.getElementById("featured-grid");
 
-    // Fetch JSON data
-    fetch("./travel_recommendation_api.json") // Ensure this path is correct
+    fetch("./travel_recommendation_api.json")
         .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
+            if (!response.ok) throw new Error("Network response was not ok");
             return response.json();
         })
         .then(data => {
-            console.log("Fetched Data:", data); // Debugging: Check if data is fetched
-
-            // Search button event listener
-            searchButton.addEventListener("click", function () {
-                searchDestinations(data);
+            displayFeaturedDestinations(data.destinations.slice(0, 3));
+            
+            searchButton.addEventListener("click", () => searchDestinations(data));
+            searchInput.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") searchDestinations(data);
             });
-
-            // Allow pressing Enter in the input field to trigger search
-            searchInput.addEventListener("keypress", function (event) {
-                if (event.key === "Enter") {
-                    searchDestinations(data);
-                }
-            });
-
-            // Clear button functionality
-            clearButton.addEventListener("click", function () {
+            clearButton.addEventListener("click", () => {
                 searchInput.value = "";
                 resultsContainer.innerHTML = "";
             });
@@ -38,72 +27,65 @@ document.addEventListener("DOMContentLoaded", function () {
             resultsContainer.innerHTML = "<p>Error loading data. Please try again later.</p>";
         });
 
-    // Function to search and display results
     function searchDestinations(data) {
-        const query = searchInput.value.trim().toLowerCase(); // Normalize input
-        resultsContainer.innerHTML = ""; // Clear previous results
+        const query = searchInput.value.trim().toLowerCase();
+        resultsContainer.innerHTML = "";
 
         if (!query) {
             resultsContainer.innerHTML = "<p>Please enter a search term.</p>";
             return;
         }
 
-        let results = [];
+        const results = data.destinations.filter(dest => 
+            dest.name.toLowerCase().includes(query) ||
+            dest.topDestinations.some(d => d.name.toLowerCase().includes(query)) ||
+            dest.thingsToDo.some(t => t.name.toLowerCase().includes(query)) ||
+            dest.hotels.some(h => h.name.toLowerCase().includes(query))
+        );
 
-        if (query.includes("beach")) {
-            results = data.beaches;
-            displayResults(results, "Beaches");
-        } else if (query.includes("temple")) {
-            results = data.temples;
-            displayResults(results, "Temples");
+        if (results.length > 0) {
+            results.forEach(displayDestination);
         } else {
-            // Check for country/city matches
-            data.countries.forEach(country => {
-                if (country.name.toLowerCase().includes(query)) {
-                    results.push(...country.cities);
-                } else {
-                    country.cities.forEach(city => {
-                        if (city.name.toLowerCase().includes(query)) {
-                            results.push(city);
-                        }
-                    });
-                }
-            });
-
-            if (results.length > 0) {
-                displayResults(results, "Locations");
-            } else {
-                resultsContainer.innerHTML = "<p>No results found. Try another search.</p>";
-            }
+            resultsContainer.innerHTML = "<p>No results found. Try another search.</p>";
         }
     }
 
-    // Function to display results
-    function displayResults(results, title) {
-        const sectionTitle = document.createElement("h2");
-        sectionTitle.textContent = `Recommended ${title}`;
-        resultsContainer.appendChild(sectionTitle);
-
-        results.forEach(place => {
-            const placeDiv = document.createElement("div");
-            placeDiv.classList.add("place");
-
-            const placeName = document.createElement("h3");
-            placeName.textContent = place.name;
-
-            const placeImage = document.createElement("img");
-            placeImage.src = place.imageUrl;
-            placeImage.alt = place.name;
-            placeImage.style.width = "200px"; // Adjust image size
-
-            const placeDescription = document.createElement("p");
-            placeDescription.textContent = place.description || "No description available.";
-
-            placeDiv.appendChild(placeName);
-            placeDiv.appendChild(placeImage);
-            placeDiv.appendChild(placeDescription);
-            resultsContainer.appendChild(placeDiv);
+    function displayFeaturedDestinations(destinations) {
+        destinations.forEach(dest => {
+            const card = createDestinationCard(dest);
+            featuredGrid.appendChild(card);
         });
     }
-});
 
+    function displayDestination(dest) {
+        const card = createDestinationCard(dest, true);
+        resultsContainer.appendChild(card);
+    }
+
+    function createDestinationCard(dest, expanded = false) {
+        const card = document.createElement("div");
+        card.classList.add("destination-card");
+
+        card.innerHTML = `
+            <img src="${dest.imageUrl}" alt="${dest.name}">
+            <h3>${dest.name}</h3>
+            <p>${dest.description}</p>
+        `;
+
+        if (expanded) {
+            const details = document.createElement("div");
+            details.classList.add("destination-details");
+            details.innerHTML = `
+                <h4>Top Destinations</h4>
+                ${dest.topDestinations.map(d => `<p>${d.name}: ${d.description}</p>`).join("")}
+                <h4>Things to Do</h4>
+                ${dest.thingsToDo.map(t => `<p><a href="${t.link}" target="_blank">${t.name}</a>: ${t.description}</p>`).join("")}
+                <h4>Hotels</h4>
+                ${dest.hotels.map(h => `<p><a href="${h.link}" target="_blank">${h.name}</a>: ${h.description}</p>`).join("")}
+            `;
+            card.appendChild(details);
+        }
+
+        return card;
+    }
+});
