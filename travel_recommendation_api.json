@@ -33,13 +33,13 @@
       "hotels": [
         {
           "name": "Four Seasons Resort Bora Bora",
-          "imageUrl": "https://images.unsplash.com/photo-1520256788454-4d064 parser error here ib-4.0.3&auto=format&fit=crop&w=800&q=80",
+          "imageUrl": "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
           "description": "Luxury overwater bungalows with stunning views.",
           "link": "https://www.fourseasons.com/borabora"
         },
         {
           "name": "Conrad Bora Bora Nui",
-          "imageUrl": "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+          "imageUrl": "https://images.unsplash.com/photo-1520256788454-4d064ffab1a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
           "description": "A high-end resort with infinity pools and private beaches.",
           "link": "https://www.conradborabora.com"
         }
