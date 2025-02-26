@@ -3,51 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-    <link rel="stylesheet" href="travel_recommendation.css"> <!-- Link to your CSS file -->
+    <title>Contact Us - Noelle's Travel</title>
+    <link rel="stylesheet" href="travel_recommendation.css">
 </head>
-<body class="contact-page"></body>
-    <header>
-        <h1>Contact Us</h1>
+<body class="contact-page">
+    <header class="navbar">
+        <a href="travel_recommendation.html" class="back-arrow">← Back</a>
+        <div class="logo"><span>Noelle's Travel</span></div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="travel_recommendation.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
     </header>
 
     <section class="contact-container">
-        
         <div class="contact-info">
             <h2>Contact Us</h2>
-            <p>Have questions or need assistance? Fill out the form, and we'll get back to you as soon as possible.</p>
+            <p>Have questions or need assistance? Fill out the form, and we’ll get back to you as soon as possible.</p>
         </div>
-
         <div class="contact-form">
             <form id="contactForm">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>
-
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
-
                 <label for="message">Message</label>
                 <textarea id="message" name="message" rows="5" required></textarea>
-
                 <button type="submit">Send Message</button>
             </form>
-
             <p id="successMessage" style="display: none; color: green; font-size: 1.2rem; margin-top: 10px;">
                 Thanks for submitting!
             </p>
         </div>
-        </section>
-        
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("contactForm").addEventListener("submit", function(event) {
-                event.preventDefault(); 
-    
+                event.preventDefault();
                 document.getElementById("successMessage").style.display = "block";
-    
-                document.getElementById("contactForm").reset();
+                this.reset();
             });
         });
-        </script>
+    </script>
 </body>
 </html>
